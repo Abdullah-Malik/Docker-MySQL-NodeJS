@@ -1,0 +1,30 @@
+version: "3.3"
+
+services: 
+  mysql_server:
+    image: mysql:8.0
+    environment: 
+      - MYSQL_DATABASE=project
+      - MYSQL_USER=dan
+      - MYSQL_PASSWORD=secret
+      - MYSQL_ROOT_PASSWORD=secret
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./file.sql:/docker-entrypoint-initdb.d/init.sql
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports: 
+      - 3000:3000
+    volumes: 
+      - .:/app
+      - '/app/node_modules'
+    depends_on: 
+      - mysql_server
+  
+volumes:
+  mysql-data:
+  
+
+    
