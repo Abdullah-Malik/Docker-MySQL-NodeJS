@@ -246,6 +246,127 @@ app.post('/teacher/login', function (req, res) {
 })
 
 
+app.get('/registration/', function (req, res) {
+  con = mysql.createConnection(mysqlConfig);
+  con.connect(function(err) {
+    if (err) throw err;
+  });
+  con.connect(function(err) {
+    if (err) throw err;
+    const sql = `SELECT * FROM REGISTRATION`
+    con.query(sql, function (err, result, fields) {
+      if (err) throw err;
+      res.send(JSON.stringify(result))
+    });
+  });
+})
+
+app.post('/registration/add', function (req, res) {
+  
+  let STUDENT = req.body.STUDENT;
+  let TEACHER = req.body.TEACHER;
+  let COURSE = req.body.COURSE;
+  
+  con = mysql.createConnection(mysqlConfig);
+  con.connect(function(err) {
+    if (err) throw err;
+  });
+  con.connect(function(err) {
+    if (err) throw err;
+    const sql = `INSERT INTO REGISTRATION(S_EMAIL, T_EMAIL, CID) VALUES (` + "'" + STUDENT + "'" + `, `+ "'" + TEACHER + "'" + `, `+ "'" + COURSE + "'" + `);`;
+    console.log(sql);
+    con.query(sql, function (err, result, fields) {
+      if (err) throw err;
+      res.send(JSON.stringify(result))
+    });
+  });
+})
+
+app.delete('/registration/delete/student', function (req, res) {
+  
+  let STUDENT = req.body.STUDENT;
+  
+  
+  con = mysql.createConnection(mysqlConfig);
+  con.connect(function(err) {
+    if (err) throw err;
+  });
+  con.connect(function(err) {
+    if (err) throw err;
+    const sql = `DELETE FROM REGISTRATION WHERE S_EMAIL LIKE `+ "'" + STUDENT + "'" + `;`;
+    console.log(sql);
+    con.query(sql, function (err, result, fields) {
+      if (err) throw err;
+      res.send(JSON.stringify(result))
+    });
+  });
+})
+
+app.delete('/registration/delete/teacher', function (req, res) {
+  
+  let TEACHER = req.body.TEACHER;
+  
+  
+  con = mysql.createConnection(mysqlConfig);
+  con.connect(function(err) {
+    if (err) throw err;
+  });
+  con.connect(function(err) {
+    if (err) throw err;
+    const sql = `DELETE FROM REGISTRATION WHERE T_EMAIL LIKE `+ "'" + TEACHER + "'" + `;`;
+    console.log(sql);
+    con.query(sql, function (err, result, fields) {
+      if (err) throw err;
+      res.send(JSON.stringify(result))
+    });
+  });
+})
+
+
+app.delete('/registration/delete/course', function (req, res) {
+  
+  let COURSE = req.body.COURSE;
+  
+  
+  con = mysql.createConnection(mysqlConfig);
+  con.connect(function(err) {
+    if (err) throw err;
+  });
+  con.connect(function(err) {
+    if (err) throw err;
+    const sql = `DELETE FROM REGISTRATION WHERE CID LIKE `+ "'" + COURSE + "'" + `;`;
+    console.log(sql);
+    con.query(sql, function (err, result, fields) {
+      if (err) throw err;
+      res.send(JSON.stringify(result))
+    });
+  });
+})
+
+
+
+app.post('/registration/edit/', function (req, res) {
+  
+  let STUDENT = req.body.STUDENT;
+  let TEACHER = req.body.TEACHER;
+  let COURSE = req.body.COURSE;
+  
+  con = mysql.createConnection(mysqlConfig);
+  con.connect(function(err) {
+    if (err) throw err;
+  });
+  con.connect(function(err) {
+    if (err) throw err;
+    const sql = `UPDATE REGISTRATION SET T_EMAIL =  ` + "'" + TEACHER + "' WHERE " +  `CID LIKE` + "'" + COURSE + "' and S_EMAIL LIKE " + "'" + STUDENT + "'" + `;`;
+    console.log(sql);
+    con.query(sql, function (err, result, fields) {
+      if (err) throw err;
+      res.send(JSON.stringify(result))
+    });
+  });
+})
+
+
 
 
 
